@@ -28,19 +28,19 @@ class FluidInput extends React.Component {
   render() {
     const { type, label, style, id } = this.props;
     const { focused, value } = this.state;
-    
+
     let inputClass = "fluid-input";
     if (focused) {
       inputClass += " fluid-input--focus";
     } else if (value != "") {
       inputClass += " fluid-input--open";
     }
-    
+
     return (
       <div className={inputClass} style={style}>
         <div className="fluid-input-holder">
-          
-          <input 
+
+          <input
             className="fluid-input-input"
             type={type}
             id={id}
@@ -50,7 +50,7 @@ class FluidInput extends React.Component {
             autoComplete="off"
           />
           <label className="fluid-input-label" forhtml={id}>{label}</label>
-          
+
         </div>autocomplete
       </div>
     );
@@ -68,18 +68,22 @@ class Button extends React.Component {
 }
 
 
-
 class LoginContainer extends React.Component {
   constructor(props) {
     super(props)
-  }
- 
-  onUserName(userName) {
-    console.log(userName)
+    this.userName = null;
   }
 
+
+  onClick() {
+    if (this.userName == "thenga") {
+      this.props.onClick()
+    }
+  }
+
+
   onUserPassword(password) {
-    console.log(password)
+    this.password = password
   }
 
   render() {
@@ -89,19 +93,18 @@ class LoginContainer extends React.Component {
     return (
       <div className="login-container">
         <div className="title">
-         //H4ckM3
+        //H4ckM3
         </div>
         {/* <FluidInput type="text" label="name" id="name" style={style} onInput={this.onUserName}/> */}
-        <FluidInput type="password" label="<secret>" id="password" style={style} onInput={this.onUserPassword}/>
-        <Link href="/description"><Button buttonText="Hit Me" buttonClass="login-button"  onClick={this.props.onClick}/></Link>
+        <FluidInput type="password" label="<secret>" id="password" style={style} onInput={this.onUserPassword} />
+        <Link href="/description"><Button buttonText="Hit Me" buttonClass="login-button" onClick={this.onClick.bind(this)} /></Link>
       </div>
     );
   }
 }
 
-
 export default () => (
-    <Layout>
-    <LoginContainer/>
-    </Layout>
+  <Layout styles={["major", "login"]}>
+    <LoginContainer />
+  </Layout>
 )

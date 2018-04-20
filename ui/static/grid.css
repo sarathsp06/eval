@@ -1,0 +1,34 @@
+.grid-flex-container {
+  max-height: 70vh;
+  
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.grid-flex-item {
+  width: 80px;
+  height:  80px;
+  text-align: center;
+  height: width;
+  margin: 2px;
+  background-color: blueviolet;
+  font-size: 1em;
+  border:1px solid black;
+  text-align: center;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+

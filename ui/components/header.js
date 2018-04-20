@@ -1,12 +1,17 @@
 import Head from 'next/head'
 
-const Header = () => (
-    <div>
+const Header = (props) => (
+  <div>
     <Head>
-      <title>Test</title>
-      <link href="/static/master.css" rel="stylesheet" key="test"/>
+      <title>3x073L qu!2</title>
+      {props.styles.map((value, index) => {
+        return (
+          <link href={`/static/${value}.css`} rel="stylesheet" key="test" />
+        )
+      })}
+      {/* <link href="/static/master.css" rel="stylesheet" key="test"/> */}
     </Head>
-    </div>
+  </div>
 )
 
 export default Header
