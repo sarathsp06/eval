@@ -5,6 +5,14 @@ import fetch from 'isomorphic-unfetch'
 
 const quizStyles = ["master", "quiz", "grid"]
 
+class Image extends React.Component {
+    constructor(props){
+        super(props)
+    }
+    render = () => (<img src={`/static/${this.props.item}${this.props.reduced != undefined ? "-or8" : ""}.png`} style={this.props.style} />)
+}
+
+
 class Quiz extends React.Component {
     constructor(props) {
         super(props)
@@ -23,15 +31,12 @@ class Quiz extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.selection != null) {
-            this.setState({ selection: nextProps.selection })
-        }
+        this.setState({ selection: nextProps.selection })
     }
-
 
     render = () => {
         if (this.props.question == undefined) {
-            return <div className="container"><h2>Loading</h2></div>
+            return <div className="container"><Image reduced item="quiz"  style={{ width: "100%" }}/></div>
         }
         return (<div className="container">
             <div className="quiz">
@@ -58,6 +63,10 @@ class Timer extends React.Component {
     constructor(props) {
         super(props)
         var timeLeft = this.props.timeLeft
+        this.setTimeLeft(timeLeft)
+    }
+
+    setTimeLeft = (timeLeft) => {
         if (timeLeft == null || typeof timeLeft == "undefined") {
             timeLeft = 0
         }
@@ -66,7 +75,6 @@ class Timer extends React.Component {
             "seconds": timeLeft % 60,
             "minutes": timeLeft / 60
         }
-
     }
 
     componentDidMount = () => {
@@ -87,6 +95,11 @@ class Timer extends React.Component {
         const seconds = timeLeft % 60;
         const minutes = Math.floor(timeLeft / 60);
         this.setState({ seconds: seconds, minutes: minutes, timeLeft: timeLeft });
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        var timeLeft = nextProps.timeLeft
+        this.setTimeLeft(timeLeft)
     }
 
     render = () => {
@@ -123,16 +136,19 @@ class TheGrid extends React.Component {
         this.props.qindex(event.currentTarget.value)
     }
 
-    render = () => (
-        <ul className="grid-flex-container">
+    render = () => {
+        if (this.props.count == 1) {
+            return <div className="grid-flex-container"><Image  reduced item="grid" style={{ width: "100%" }} /></div>
+        }
+        return (<ul className="grid-flex-container">
             {[...Array(this.props.count)].map((x, i) => {
                 var className = "grid-flex-item"
                 className = (i == this.props.current) ? "active " + className : className
                 className = this.props.answers[i] != null ? "done " + className : className
                 return (<li className={className} key={i} value={i} onClick={this.onClick}>{i + 1}</li>)
             })}
-        </ul>
-    )
+        </ul>)
+    }
 }
 
 
@@ -147,6 +163,7 @@ class QuizLayout extends React.Component {
         super(props);
 
         this.state = {
+            timeLeft: 0,
             "qindex": 0,
             "questions": [{}],
             "answers": [null]
@@ -158,7 +175,7 @@ class QuizLayout extends React.Component {
         // this.state.questions = questions;
         const res = await fetch("https://demo8128430.mockable.io/questions")
         const data = await res.json()
-        this.setState({ questions: data, answers: Array(data.length).fill(null) })
+        this.setState({ timeLeft: 3600, questions: data, answers: Array(data.length).fill(null) })
     }
 
     questionIndex = (index) => {
@@ -198,7 +215,7 @@ class QuizLayout extends React.Component {
 
             </section>
             <nav className="nav right">
-                <Timer timeLeft={3600} />
+                <Timer timeLeft={this.state.timeLeft} />
                 <TheGrid
                     count={this.state.questions.length}
                     qindex={this.questionIndex}
