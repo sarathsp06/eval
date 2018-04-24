@@ -66,31 +66,21 @@
   }
   .quiz-answer:hover {
     background: #eee;
+  
   }
   .quiz-answer:before {
     content: "";
     display: inline-block;
-    width: 15px;
-    height: 15px;
-    border: 1px solid #ccc;
-    background: #fff;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #222222;
+    border-radius: 8px;
+    background: #f7f7f7;
     vertical-align: middle;
     margin-right: 10px;
   }
+  
   .quiz-answer.active:before {
     background-color: #333;
     border-color: #333;
   }
-  .quiz-answer.correct:before {
-    background-color: green;
-    border-color: green;
-  }
-  .quiz-answer.incorrect:before {
-    background-color: red;
-    border-color: red;
-  }
-  .quiz-answer.active.correct:before {
-    outline: 2px solid green;
-    outline-offset: 2px;
-  }
-  
