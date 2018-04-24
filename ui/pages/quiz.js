@@ -5,19 +5,14 @@ import fetch from 'isomorphic-unfetch'
 
 const quizStyles = ["master", "quiz", "grid"]
 
-class Image extends React.Component {
-    constructor(props){
-        super(props)
-    }
-    render = () => (<img src={`/static/${this.props.item}${this.props.reduced != undefined ? "-or8" : ""}.png`} style={this.props.style} />)
-}
+const Image = (props) => (<img src={`/static/${props.item}${props.reduced != undefined ? "-or8" : ""}.png`} style={props.style} />)
+const Logo = () => (<img src="/static/logo.jpg" data-reactid=".0.0" style={{ width: "100%" }} />)
 
 
 class Quiz extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { selection: this.props.selection };
-
+        this.state = { selection: this.props.selection }
     }
 
     done = () => {
@@ -36,7 +31,7 @@ class Quiz extends React.Component {
 
     render = () => {
         if (this.props.question == undefined) {
-            return <div className="container"><Image reduced item="quiz"  style={{ width: "100%" }}/></div>
+            return <div className="container"><Image reduced item="quiz" style={{ width: "100%" }} /></div>
         }
         return (<div className="container">
             <div className="quiz">
@@ -62,8 +57,8 @@ class Quiz extends React.Component {
 class Timer extends React.Component {
     constructor(props) {
         super(props)
-        var timeLeft = this.props.timeLeft
-        this.setTimeLeft(timeLeft)
+        this.timeLeft = this.props.timeLeft
+        this.setTimeLeft(this.timeLeft)
     }
 
     setTimeLeft = (timeLeft) => {
@@ -75,6 +70,19 @@ class Timer extends React.Component {
             "seconds": timeLeft % 60,
             "minutes": timeLeft / 60
         }
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        var timeLeft = nextProps.timeLeft
+        if (timeLeft == null || typeof timeLeft == "undefined" || timeLeft == this.timeLeft) {
+            return
+        }
+        this.timeLeft = timeLeft
+        this.setState({
+            "timeLeft": timeLeft,
+            "seconds": timeLeft % 60,
+            "minutes": timeLeft / 60
+        })
     }
 
     componentDidMount = () => {
@@ -95,11 +103,6 @@ class Timer extends React.Component {
         const seconds = timeLeft % 60;
         const minutes = Math.floor(timeLeft / 60);
         this.setState({ seconds: seconds, minutes: minutes, timeLeft: timeLeft });
-    }
-
-    componentWillReceiveProps = (nextProps) => {
-        var timeLeft = nextProps.timeLeft
-        this.setTimeLeft(timeLeft)
     }
 
     render = () => {
@@ -138,7 +141,7 @@ class TheGrid extends React.Component {
 
     render = () => {
         if (this.props.count == 1) {
-            return <div className="grid-flex-container"><Image  reduced item="grid" style={{ width: "100%" }} /></div>
+            return <div className="grid-flex-container"><Image reduced item="grid" style={{ width: "100%" }} /></div>
         }
         return (<ul className="grid-flex-container">
             {[...Array(this.props.count)].map((x, i) => {
@@ -152,11 +155,6 @@ class TheGrid extends React.Component {
 }
 
 
-class Logo extends React.Component {
-    render = () => (
-        <img src="/static/logo.jpg" data-reactid=".0.0" style={{ width: "100%" }} />
-    )
-}
 
 class QuizLayout extends React.Component {
     constructor(props) {
@@ -172,7 +170,6 @@ class QuizLayout extends React.Component {
     }
 
     setQuestion = async () => {
-        // this.state.questions = questions;
         const res = await fetch("https://demo8128430.mockable.io/questions")
         const data = await res.json()
         this.setState({ timeLeft: 3600, questions: data, answers: Array(data.length).fill(null) })
