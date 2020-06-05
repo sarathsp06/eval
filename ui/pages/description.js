@@ -10,32 +10,6 @@ const description = (props) => (
         <li>lkashl;akshflkad</li>
         <li>lkashl;akshflkad</li>
         <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
-        <li>lkashl;akshflkad</li>
         </ul>
         <Link href="/quiz"><Button>Quiz</Button></Link>
     </div>

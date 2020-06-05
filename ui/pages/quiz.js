@@ -170,7 +170,7 @@ class QuizLayout extends React.Component {
     }
 
     setQuestion = async () => {
-        const res = await fetch("https://demo8128430.mockable.io/questions")
+        const res = await fetch("http://www.mocky.io/v2/5eda84fe330000650079ec8d")
         const data = await res.json()
         this.setState({ timeLeft: 3600, questions: data, answers: Array(data.length).fill(null) })
     }
